@@ -38,7 +38,7 @@ export default {
             const resAuth = await HTTP.post('api/login/', this.userData)
             this.$store.commit('setUser', this.userData)
             this.$store.commit('setToken', resAuth.data.token)
-            this.$router.push('/usermanager').catch(err => {})
+            this.$router.push('/products').catch(err => {})
           } else {
             this.notice("Ошибка", response.data.message, "error")
           }

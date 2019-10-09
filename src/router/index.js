@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import AccessDenied from '@/components/403'
-import Auth from '@/components/Auth'
-import UserManager from '@/components/UserManager'
+import Products from '@/components/Products'
+import Product from '@/components/Product'
 
 Vue.use(Router)
 
@@ -14,18 +14,19 @@ export default new Router({
       component: AccessDenied
     },
     {
-      path: '/auth',
-      name: 'Auth',
-      component: Auth
+      path: '/products',
+      name: 'Products',
+      component: Products
     },
     {
-      path: '/usermanager',
-      name: 'UserManager',
-      component: UserManager
+      path: '/product/:productID',
+      name: 'Product',
+      component: Product,
+      props: true
     },
     {
       path: '*',
-      redirect: '/usermanager'
+      redirect: '/products'
     }
   ]
 })

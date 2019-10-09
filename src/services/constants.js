@@ -1,0 +1,1 @@
+export const IMGPATH = 'http://smktesting.herokuapp.com/static/'
