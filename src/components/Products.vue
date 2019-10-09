@@ -6,9 +6,11 @@
           <v-card max-width="344" class="mx-auto" :elevation="hover ? 8 : 2">
             <v-img class="white--text" height="200px" :src="productIMG + product.img"
                     :aspect-ratio="16/9"></v-img>
+            <v-divider></v-divider>
             <v-card-title>
               <router-link :to="{ name: 'Product', params: { productID: product.id, productData: product }}">{{ product.title }}</router-link>
             </v-card-title>
+            <v-divider></v-divider>
             <v-card-text>{{ product.text }}</v-card-text>
             <v-card-actions>
               <v-btn text>Click</v-btn>

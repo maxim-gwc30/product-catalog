@@ -1,9 +1,17 @@
+body {
+    background-color: #fff !important;
+}
+
 .login-form-container {
     margin-top: 20px;
 }
 
 .userinfo-box {
     display: contents;
+}
+
+.main-container {
+    max-width: 80% !important;
 }
 
 .custom-loader {
