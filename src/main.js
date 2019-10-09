@@ -58,8 +58,8 @@ const store = new Vuex.Store({
 
 // Routes rules
 router.beforeEach((to, from, next) => {
-  if (store.state.userData.username !== '' && to.path === '/auth') return next('/usermanager')
-  if (store.state.userData.username !== '' && to.path === '/') return next('/usermanager')
+  if (store.state.userData.username !== '' && to.path === '/auth') return next('/products')
+  if (store.state.userData.username !== '' && to.path === '/') return next('/products')
   if (to.path === '/' || to.path === '/auth') return next()
   if (store.state.userData.username === '') return next('/auth')
   else return next()
