@@ -7,7 +7,7 @@
             <v-img class="white--text" height="200px" :src="productIMG + product.img"
                     :aspect-ratio="16/9"></v-img>
             <v-card-title>
-              <router-link :to="{ name: 'Product', params: { productID: product.id }}">{{ product.title }}</router-link>
+              <router-link :to="{ name: 'Product', params: { productID: product.id, productData: product }}">{{ product.title }}</router-link>
             </v-card-title>
             <v-card-text>{{ product.text }}</v-card-text>
             <v-card-actions>
@@ -89,7 +89,7 @@ export default {
         const response = await HTTP.get('api/products/')
         this.products = response.data
       } catch(error) {
-        this.notice("Ошибка", "Не удалось получить список работников", "error")
+        this.notice("Ошибка", "Не удалось получить список товаров", "error")
       }
     }
   },

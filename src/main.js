@@ -32,7 +32,6 @@ const store = new Vuex.Store({
   })],
   state: {
     userData: {
-      _id: '',
       username: '',
       token: ''
     },
@@ -40,11 +39,9 @@ const store = new Vuex.Store({
   },
   mutations: {
     setUser (state, data) {
-      state.userData._id = data._id
       state.userData.username = data.username
     },
     deleteUser (state) {
-      state.userData._id = ''
       state.userData.username = ''
     },
     setToken (state, data) {
@@ -54,15 +51,6 @@ const store = new Vuex.Store({
       state.token = ''
     },
   }
-})
-
-// Routes rules
-router.beforeEach((to, from, next) => {
-  if (store.state.userData.username !== '' && to.path === '/auth') return next('/products')
-  if (store.state.userData.username !== '' && to.path === '/') return next('/products')
-  if (to.path === '/' || to.path === '/auth') return next()
-  if (store.state.userData.username === '') return next('/auth')
-  else return next()
 })
 
 Vue.mixin({
