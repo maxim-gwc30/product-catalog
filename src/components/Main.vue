@@ -1,11 +1,11 @@
 <template>
   <div>
     <v-app>
-      <v-container fluid px-0 py-0>
+      <v-container px-0 py-0>
         <v-row no-gutters v-if="username !== ''">
           <v-col col="12">
             <v-app-bar>
-              <v-toolbar-title>Контроль работников</v-toolbar-title>
+              <v-toolbar-title>Products</v-toolbar-title>
               <div class="flex-grow-1"></div>
               <p class="mb-0 mr-3">Добро пожаловать, {{ username }}</p>
               <v-btn @click="logout">Выйти</v-btn>

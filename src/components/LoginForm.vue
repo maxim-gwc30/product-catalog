@@ -32,9 +32,10 @@ export default {
         try {
           const response = await HTTP.post('api/login/', this.userData)
           if(response.data.success) {
+            console.log(response)
             this.$store.commit('setUser', this.userData);
             this.$store.commit('setToken', response.data.token);
-            this.$router.push('/usermanager').catch(err => {})
+            this.$router.push('/products').catch(err => {})
             this.isAuthDone = false
           } else {
             this.notice("Ошибка", response.data.message, "error");
