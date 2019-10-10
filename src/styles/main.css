@@ -38,6 +38,7 @@ body {
 
 .review-column {
     border-left: 2px solid #EEEEEE;
+    background-color: #FFFFFF;
 }
 
 .custom-loader {
@@ -75,4 +76,8 @@ body {
     to {
     transform: rotate(360deg);
     }
+}
+
+.v-progress-circular {
+    margin: 1rem;
 }

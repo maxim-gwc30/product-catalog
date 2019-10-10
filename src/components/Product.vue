@@ -10,19 +10,19 @@
         <v-row>
 					<v-col align="center">
 						<v-rating v-model="averageRating" background-color="cyan darken-1" color="cyan" size="38" readonly></v-rating>
-						<p class="caption">Средняя оценка: {{ averageRating }}</p>
+						<p class="caption">Средняя оценка: {{ reviews.length > 0 ? averageRating : 0 }}</p>
 					</v-col>
 				</v-row>
       </v-col>
       <v-col sm="12" md="3" lg="3" cols>
-        <v-row no-gutters>
+        <v-row>
 					<v-col>
 						<p class="headline">
 							{{ productData.title }}
 						</p>
 					</v-col>
         </v-row>
-				<v-row no-gutters>
+				<v-row>
 					<v-col>
 						<p class="body-2">
 							{{ productData.text }}
@@ -57,7 +57,7 @@
 				<v-divider class="mt-3"></v-divider>
         <v-row v-for="review in paginatedData" :key="review.id">
 					<v-col sm="12" md="12" lg="12" cols class="py-0 mt-3 review-column">
-						<p class="caption">{{ review.created_by.username }}: {{ toISODate(review.created_at) }}</p>
+						<p class="caption">{{ review.created_by.username }}: {{ formatDate(review.created_at) }}</p>
 						<p class="overline font-italic font-weight-light">{{ review.text }}</p>
 						<p class="caption">
 							Оценка: <v-rating v-model="review.rate" background-color="cyan darken-1" color="cyan" size="12" class="review-rates" readonly></v-rating>
@@ -65,12 +65,12 @@
 					</v-col>
         </v-row>
 				<v-row>
-					<v-col>
+					<v-col class="text-right">
 						<v-btn @click="prevPage" :disabled="pageNumber === 0" small>
 							<v-icon dark>mdi-chevron-left</v-icon>
 						</v-btn>
 					</v-col>
-					<v-col>
+					<v-col class="text-left">
 						<v-btn @click="nextPage" :disabled="pageNumber >= pageCount -1" small>
 							<v-icon dark>mdi-chevron-right</v-icon>
 						</v-btn>
@@ -106,6 +106,7 @@ export default {
     }
   },
   methods: {
+		// Метод получения всех отзывов к выбранному продукту по ID
     async getReviews () {
       try {
         const response = await HTTP.get(`api/reviews/${ this.productID }`)
@@ -118,6 +119,8 @@ export default {
         this.notice("Ошибка", "Не удалось получить список отзывов", "error")
       }
 		},
+		
+		// Метод добавления отзыва к продукту
 		async addReview () {
 			HTTP.defaults.headers.common['Authorization'] = 'Token ' + this.token;
 			this.addLoading = true
@@ -139,12 +142,18 @@ export default {
 			this.addLoading = false
 			this.addLoader = null
 		},
-		toISODate: function(date){
+
+		// Перевод даты в читаемый вид
+		formatDate: function(date){
 			return moment(date).format('YYYY-MM-DD в hh:mm')
 		},
+
+		// Следующая страница отзывов
 		nextPage(){
 			this.pageNumber++;
 		},
+
+		// Предыдущая страница отзывов
 		prevPage(){
 			this.pageNumber--;
 		}
@@ -155,6 +164,7 @@ export default {
     }
   },
   computed: {
+		// Расчёт средней оценки продукта
 		averageRating: function () {
 			let sumRate = 0
 			let countReviews = this.reviews.length
@@ -163,29 +173,39 @@ export default {
 			})
 			return Math.round(sumRate / countReviews)
 		},
+
+		// Возвращает имя пользователя из Vuex
 		username() {
 			if (this.$store.state.userData.username !== '')
 					return this.$store.state.userData.username;
 			else
 					return '';
 		},
+
+		// Возвращает token из Vuex полученный при авторизации пользователя
 		token() {
 			if (this.$store.state.token !== '')
 					return this.$store.state.token;
 			else
 					return '';
 		},
+
+		// Возвращает ошибки валидации при не заполненном поле текст отзыва
 		reviewTextErrors () {
       const errors = []
       if (!this.$v.newReview.text.$dirty) return errors
       !this.$v.newReview.text.required && errors.push('Введите текст отзыва.')
       return errors
 		},
+
+		// Кол-во отображаемых отзывов на странице
 		pageCount () {
       let l = this.reviews.length,
           s = this.size;
       return Math.ceil(l/s);
-    },
+		},
+		
+		// Отзывы для отображения на странице
     paginatedData () {
       const start = this.pageNumber * this.size
       const end = start + this.size

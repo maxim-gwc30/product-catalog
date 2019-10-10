@@ -132,6 +132,7 @@ export default {
     }
   },
   methods: {
+    // Метод авторизации пользователя
     async authorize () {
       this.signinLoading = true
       this.signinLoader = 'loading4'
@@ -139,7 +140,6 @@ export default {
       try {
         const response = await HTTP.post('api/login/', this.userData)
         if(response.data.success) {
-          console.log(response)
           this.$store.commit('setUser', this.userData);
           this.$store.commit('setToken', response.data.token);
           this.$router.push('/products').catch(err => {})
@@ -155,6 +155,8 @@ export default {
       this.signinLoading = false
       this.signinLoader = null
     },
+    
+    // Метод регистрации пользователя
     async registration () {
       this.signupLoading = true
       this.signupLoader = 'loading4'
@@ -179,6 +181,8 @@ export default {
       this.signupLoading = false
       this.signupLoader = null
     },
+
+    // Метод завершения сеанса пользователя
     logout: function() {
       this.$store.commit('deleteUser')
       this.$store.commit('deleteToken')
@@ -198,18 +202,23 @@ export default {
     },
   },
   computed: {
+    // Возвращает имя пользователя из Vuex
     username() {
         if (this.$store.state.userData.username !== '')
             return this.$store.state.userData.username;
         else
             return '';
     },
+
+    // Возвращает ошибки валидации при неверном заполнении поля имя пользователя 
     userNameErrors () {
       const errors = []
       if (!this.$v.userData.username.$dirty) return errors
       !this.$v.userData.username.required && errors.push('Введите имя пользователя.')
       return errors
     },
+
+    // Возвращает ошибки валидации при не неверно заполненном поле пароль
     passwordErrors () {
       const errors = []
       if (!this.$v.userData.password.$dirty) return errors
