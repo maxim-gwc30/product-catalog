@@ -5,7 +5,9 @@
         <v-row no-gutters>
           <v-col col="12">
             <v-app-bar color="grey darken-3">
-              <v-toolbar-title class="headline grey--text text--lighten-5">Products</v-toolbar-title>
+              <v-toolbar-title class="brand-title">
+                <router-link :to="{ name: 'Products' }">Products</router-link>
+              </v-toolbar-title>
               <div class="flex-grow-1"></div>
               <div v-if="username !== ''" class="userinfo-box">
                 <p class="mb-0 mr-3 body-2 grey--text text--lighten-1">Добро пожаловать, {{ username }}</p>
@@ -22,9 +24,9 @@
             <router-view></router-view>
           </v-col>
         </v-row>
-        <v-row>
+        <v-row no-gutters>
           <v-col>
-            <v-footer absolute padless>
+            <v-footer padless>
               <v-card flat tile width="100%" class="grey darken-3 text-center">
                 <v-card-text>
                   <v-btn href="https://telegram.me/max_gwc30" target="_blank" icon>
@@ -73,13 +75,13 @@
                   </form>
                   <div class="text-center">
                     <v-btn color="info" @click="authorize" :loading="signinLoading" :disabled="signinLoading">
-                        Войти
-                        <template v-slot:signinLoader>
-                          <span class="custom-loader">
-                            <v-icon light>mdi-cached</v-icon>
-                          </span>
-                        </template>
-                      </v-btn>
+                      Войти
+                      <template v-slot:signinLoader>
+                        <span class="custom-loader">
+                          <v-icon light>mdi-cached</v-icon>
+                        </span>
+                      </template>
+                    </v-btn>
                   </div>
                 </div>
               </v-tab-item>

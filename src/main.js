@@ -45,7 +45,7 @@ const store = new Vuex.Store({
       state.userData.username = ''
     },
     setToken (state, data) {
-      state.token = data.token
+      state.token = data
     },
     deleteToken (state) {
       state.token = ''
